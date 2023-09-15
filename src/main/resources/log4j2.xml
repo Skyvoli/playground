@@ -10,7 +10,7 @@
     </Appenders>
     <loggers>
         <Root level="TRACE">
-            <AppenderRef ref="stdout" level="TRACE"/>
+            <AppenderRef ref="stdout" level="INFO"/>
             <AppenderRef ref="logfile" level="ERROR"/>
         </Root>
     </loggers>
