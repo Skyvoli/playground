@@ -1,6 +1,6 @@
-package io.skystar;
+package io.skyvoli;
 
-import io.skystar.dto.PdfData;
+import io.skyvoli.dto.PdfData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jsoup.Jsoup;

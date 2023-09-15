@@ -1,4 +1,4 @@
-package io.skystar.dto;
+package io.skyvoli.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

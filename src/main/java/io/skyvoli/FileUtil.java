@@ -1,4 +1,4 @@
-package io.skystar;
+package io.skyvoli;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;

@@ -11,7 +11,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>io.skystar</groupId>
+    <groupId>io.skyvoli</groupId>
     <artifactId>playground</artifactId>
     <version>1.0-SNAPSHOT</version>
 
