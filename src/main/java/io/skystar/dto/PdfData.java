@@ -1,7 +1,7 @@
 package io.skystar.dto;
 
-import lombok.Getter;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
