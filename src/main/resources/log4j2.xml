@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="ERROR" name="log4j2" packages="">
+    <Appenders>
+        <File name="logfile" fileName="logfile.log" append="true">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %p %m%n"/>
+        </File>
+        <Console name="stdout" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %p %m%n"/>
+        </Console>
+    </Appenders>
+    <loggers>
+        <Root level="TRACE">
+            <AppenderRef ref="stdout" level="TRACE"/>
+            <AppenderRef ref="logfile" level="ERROR"/>
+        </Root>
+    </loggers>
+</Configuration>
