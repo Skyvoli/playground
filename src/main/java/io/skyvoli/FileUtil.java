@@ -15,14 +15,19 @@ public class FileUtil {
     public static void saveIntoFile(Object input, String filename) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            Path path = Path.of("out", filename);
+            Path filePath = Path.of("out", filename);
+            Path dirPath = Path.of("", "out");
 
-            if (!Files.exists(path)) {
-                Files.createFile(path);
+            if (!Files.exists(dirPath)) {
+                Files.createDirectory(dirPath);
+            }
+
+            if (!Files.exists(filePath)) {
+                Files.createFile(filePath);
             }
 
             String json = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(input);
-            Files.writeString(path, json);
+            Files.writeString(filePath, json);
         } catch (IOException e) {
             logger.error("Failed to save object into file");
         }
