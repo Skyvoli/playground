@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 
-public class SendHTTPExample {
+public class SendHttpExample {
 
     private static final Logger logger = LogManager.getRootLogger();
     private static final String USER_AGENT = "Mozilla/5.0";
@@ -17,7 +17,7 @@ public class SendHTTPExample {
     private static final String GET_URL = "https://www.arbeitsagentur.de/sitemap.xml";
 
     public static void main(String[] args) {
-        SendHTTPExample sendHTTPExample = new SendHTTPExample();
+        SendHttpExample sendHTTPExample = new SendHttpExample();
         sendHTTPExample.fetchSitemap();
     }
 
