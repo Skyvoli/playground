@@ -18,7 +18,7 @@ public class FileUtil {
             Path filePath = Path.of("out", filename);
             Path dirPath = Path.of("", "out");
 
-            if (!Files.exists(dirPath)) {
+            if (!Files.isDirectory(dirPath)) {
                 Files.createDirectory(dirPath);
             }
 
