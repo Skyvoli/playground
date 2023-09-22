@@ -9,9 +9,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class ApiDeutscheNationalBibliothek {
 
@@ -33,16 +31,16 @@ public class ApiDeutscheNationalBibliothek {
     private void start(String searchQuery, int recordNumber, String filename) {
         String url = this.buildUrl(searchQuery, recordNumber);
         Document xml = this.fetchXml(url);
-        //TODO Parameter to decide which data should be added
         List<Book> books = this.serializeXml(xml);
         FileUtil.saveIntoFile(books, filename);
     }
 
     private void getIsbn(String searchQuery, String filename) {
-        String url = this.buildUrl(searchQuery, 10);
+        List<String> keys = Arrays.asList("dc:title",  "dc:identifier xsi:type=\"tel:ISBN\"");
+        String url = this.buildUrl(searchQuery, 30);
         Document xml = this.fetchXml(url);
-        List<Book> books = this.serializeXml(xml);
-        FileUtil.saveIntoFile(this.reduceBookData(books), filename);
+        List<Book> books = this.serializeXml(xml, keys);
+        FileUtil.saveIntoFile(books, filename);
     }
 
     private String buildUrl(String searchQuery, int recordNumber) {
@@ -61,7 +59,7 @@ public class ApiDeutscheNationalBibliothek {
         return doc;
     }
 
-    private List<Book> serializeXml(Document document) {
+    private List<Book> serializeXml(Document document, List<String> tags) {
 
         List<Elements> booksData = document.getElementsByTag("dc")
                 .stream()
@@ -73,10 +71,14 @@ public class ApiDeutscheNationalBibliothek {
             HashMap<String, String> map = new HashMap<>();
             for (Element data : bookData) {
                 data.removeAttr("xmlns:tel");
-                if (map.containsKey(data.tagName())) {
-                    map.put(data.tagName() + data.attributes(), map.get(data.tagName()) + " + " + data.text());
+                if (tags.isEmpty() || tags.contains(data.tagName() + data.attributes())) {
+                    if (map.containsKey(data.tagName())) {
+                        map.put(data.tagName() + data.attributes(), map.get(data.tagName()) + " + " + data.text());
+                    } else {
+                        map.put(data.tagName() + data.attributes(), data.text());
+                    }
                 } else {
-                    map.put(data.tagName() + data.attributes(), data.text());
+                    logger.debug(data.tagName() + " couldn't be added");
                 }
             }
             serializedBooks.add(new Book(map));
@@ -84,9 +86,7 @@ public class ApiDeutscheNationalBibliothek {
         return serializedBooks;
     }
 
-    private List<Book> reduceBookData(List<Book> books) {
-        books.forEach(book -> book.getData().keySet()
-                .removeIf(key -> !(key.equals("dc:title") || key.equals("dc:identifier xsi:type=\"tel:ISBN\""))));
-        return books;
+    private List<Book> serializeXml(Document document) {
+        return serializeXml(document, new ArrayList<>());
     }
 }
