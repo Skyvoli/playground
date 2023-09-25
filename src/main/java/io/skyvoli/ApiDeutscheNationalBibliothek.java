@@ -21,11 +21,12 @@ public class ApiDeutscheNationalBibliothek {
     private static final String RECORD_SCHEMA = "&recordSchema=oai_dc";
 
     public static void main(String[] args) {
-        ApiDeutscheNationalBibliothek apiDeutscheNationalBibliothek = new ApiDeutscheNationalBibliothek();
-        apiDeutscheNationalBibliothek.start("Love is war", 100, "LoveIsWar.json");
-        apiDeutscheNationalBibliothek.start("Hell's paradise", 50, "HellsParadise.json");
-        apiDeutscheNationalBibliothek.getIsbn("Love is war", "LoveIsWarISBN.json");
-        apiDeutscheNationalBibliothek.getIsbn("Hell's paradise", "HellsParadiseISBN.json");
+        ApiDeutscheNationalBibliothek apiDNB = new ApiDeutscheNationalBibliothek();
+        apiDNB.start("Love is war", 100, "LoveIsWar.json");
+        apiDNB.start("Hell's paradise", 50, "HellsParadise.json");
+        apiDNB.getIsbn("Love is war", "LoveIsWarISBN.json");
+        apiDNB.getIsbn("Hell's paradise", "HellsParadiseISBN.json");
+        apiDNB.start("Das Voynich Hotel", 40, "VoynichHotel.json");
     }
 
     private void start(String searchQuery, int recordNumber, String filename) {
