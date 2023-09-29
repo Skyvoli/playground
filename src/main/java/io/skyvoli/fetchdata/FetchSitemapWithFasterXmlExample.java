@@ -1,5 +1,6 @@
-package io.skyvoli;
+package io.skyvoli.fetchdata;
 
+import io.skyvoli.FileUtil;
 import io.skyvoli.dto.PdfData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

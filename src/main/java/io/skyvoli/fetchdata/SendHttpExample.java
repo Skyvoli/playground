@@ -1,5 +1,6 @@
-package io.skyvoli;
+package io.skyvoli.fetchdata;
 
+import io.skyvoli.FileUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,8 +18,8 @@ public class SendHttpExample {
     private static final String GET_URL = "https://www.arbeitsagentur.de/sitemap.xml";
 
     public static void main(String[] args) {
-        SendHttpExample sendHTTPExample = new SendHttpExample();
-        sendHTTPExample.fetchSitemap();
+        SendHttpExample sendHttpExample = new SendHttpExample();
+        sendHttpExample.fetchSitemap();
     }
 
     public void fetchSitemap() {
