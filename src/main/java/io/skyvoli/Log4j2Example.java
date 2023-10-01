@@ -11,6 +11,8 @@ public class Log4j2Example {
         logger.trace("Trace log message");
         logger.debug("Debug log message");
         logger.info("Info log message");
+        logger.warn("Warn log message");
         logger.error("Error log message");
+        logger.fatal("Fatal log message");
     }
 }
