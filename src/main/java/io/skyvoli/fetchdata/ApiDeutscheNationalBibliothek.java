@@ -1,6 +1,8 @@
-package io.skyvoli;
+package io.skyvoli.fetchdata;
 
+import io.skyvoli.FileUtil;
 import io.skyvoli.dto.Book;
+import org.apache.commons.text.CaseUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jsoup.Jsoup;
@@ -22,26 +24,35 @@ public class ApiDeutscheNationalBibliothek {
 
     public static void main(String[] args) {
         ApiDeutscheNationalBibliothek apiDNB = new ApiDeutscheNationalBibliothek();
-        apiDNB.start("Love is war", 100, "LoveIsWar.json");
-        apiDNB.start("Hell's paradise", 50, "HellsParadise.json");
-        apiDNB.getIsbn("Love is war", "LoveIsWarISBN.json");
-        apiDNB.getIsbn("Hell's paradise", "HellsParadiseISBN.json");
-        apiDNB.start("Das Voynich Hotel", 40, "VoynichHotel.json");
+        apiDNB.getAll("Love is war", 100);
+        apiDNB.getAll("Hell's paradise", 50);
+        apiDNB.getAll("Das Voynich Hotel", 40);
+        apiDNB.getIsbn("Love is war");
+        apiDNB.getIsbn("Hell's paradise");
+        apiDNB.getBookFromIsbn("3-7555-0244-5");
+        apiDNB.getBookFromIsbn("2-88921-092-8");
     }
 
-    private void start(String searchQuery, int recordNumber, String filename) {
+    private void getAll(String searchQuery, int recordNumber) {
         String url = this.buildUrl(searchQuery, recordNumber);
         Document xml = this.fetchXml(url);
         List<Book> books = this.serializeXml(xml);
-        FileUtil.saveIntoFile(books, filename);
+        FileUtil.saveIntoFile(books, generateFilename(searchQuery)  + ".json");
     }
 
-    private void getIsbn(String searchQuery, String filename) {
+    private void getIsbn(String searchQuery) {
         List<String> keys = Arrays.asList("dc:title",  "dc:identifier xsi:type=\"tel:ISBN\"");
         String url = this.buildUrl(searchQuery, 30);
         Document xml = this.fetchXml(url);
         List<Book> books = this.serializeXml(xml, keys);
-        FileUtil.saveIntoFile(books, filename);
+        FileUtil.saveIntoFile(books, generateFilename(searchQuery) + "ISBN.json");
+    }
+
+    private void getBookFromIsbn(String searchQuery) {
+        String url = this.buildUrl(searchQuery, 5);
+        Document xml = this.fetchXml(url);
+        List<Book> books = this.serializeXml(xml);
+        FileUtil.saveIntoFile(books, "ISBN_" + searchQuery + ".json");
     }
 
     private String buildUrl(String searchQuery, int recordNumber) {
@@ -89,5 +100,9 @@ public class ApiDeutscheNationalBibliothek {
 
     private List<Book> serializeXml(Document document) {
         return serializeXml(document, new ArrayList<>());
+    }
+
+    private String generateFilename(String name) {
+        return CaseUtils.toCamelCase(name.trim(), true, ' ');
     }
 }
